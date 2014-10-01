@@ -1,0 +1,1 @@
+var app=window.app=app||{};!function(a,t,o,p){"use strict";var e=p.map=o.map("map",{center:[37.851,-121.61865],zoom:8});new o.tileLayer("http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png",{minZoom:0,maxZoom:20,maxNativeZoom:18,attribution:'Map data © <a href="http://www.openstreetmap.org">OpenStreetMap contributors</a>'}).addTo(e)}(window,document,L,app);
