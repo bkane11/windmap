@@ -40,15 +40,7 @@ function loadMeteogram(container, url){
         function(data){
           if(data.results[0]){
             var data = filterData(data.results[0]);
-			// console.log(data);
-			var html = $(data).find('.meteogram')
-				// .width(600)
-				// .css({
-					// 'max-height': '500px',
-					// 'overflow-y': 'scroll',
-					// 'overflow-x': 'visible'
-				// })
-			// console.log(html);
+			var html = $(data).find('.meteogram');
             container.html(html)
 				.css('margin-bottom', '-100px');
 			html.find(' > :not(table, .heading, .model_container)').remove();
@@ -98,7 +90,6 @@ function filterData(data){
 		removeStations();
 		var stations = app.stations = addStations();
 		var json =  JSON.parse(JSON.parse(res.responseText).error.split('//Total time:')[0]) ; // hacky way using the nodejistsu proxy
-		console.log(json[0]);
 		$.each(json, function(){
 			var direction = this.sensorReadings.length > 0 ? this.sensorReadings[0].direction : '',
 				avg = this.sensorReadings.length > 0 ? this.sensorReadings[0].average : '',
@@ -110,7 +101,9 @@ function filterData(data){
 				var size = (parseFloat(avg) || 1) * 2;
 				var gustsize = gust ? parseFloat(gust) * 2 : size;
 				var scaledsize = size/((gustsize-size)*2);
-				var html = '<div class="trans" title="' + shortname + ' ' + (mouseover || 'no data') +'" style="font-size:'+ size +'px; ">&#10148;</div>';
+				// var html = '<div class="station trans" title="' + shortname + ' ' + (mouseover || 'no data') +'" style="font-size:'+ size +'px; ">&#10148;</div>';
+				var transspeed = 1/Math.abs(size-gustsize)*10;
+				var html = '<div class="station" title="' + shortname + ' ' + (mouseover || 'no data') +'" style="font-size:'+ size +'px; transition: all '+transspeed+'s linear;">&#10148;</div>';
 				var color;
 					if (direction.indexOf('E')!==-1 || direction === 'N') color = 'green';
 					if (direction.indexOf('W')!==-1) color = 'red';
@@ -134,7 +127,7 @@ function filterData(data){
 			var marker = L.marker([this.baseLat, this.baseLon], {icon: icon})
 				.bindPopup( info[0] )
 				.on('mouseover', function(){
-					console.log($(this._icon).find('div')[0], scaledsize, gustsize, size);
+					this.infocus = true;
 					var el = $(this._icon).find('div')
 						.css('text-shadow', color + ' ' + (gustsize - size) + 'px 0px 0px')
 					// if(scaledsize)
@@ -143,12 +136,32 @@ function filterData(data){
 						// .css(transform, ( el.data('transform') ||  el.css(transform) + ' scale('+ scaledsize +')') )
 				})
 				.on('mouseout', function(){
+					this.infocus = false;
 					var el = $(this._icon).find('div')
 						.css('text-shadow', '')
 					// if(scaledsize)
 						// el.css(transform, el.data(transform))
 				})
 				.addTo(stations);
+			// start the animation randomly so not all arrows move at the same time
+			if(size!==gustsize)
+				setTimeout(function(){
+					var animate = setInterval( function(){
+						if(!marker || (marker && !map.hasLayer(marker)) )
+							clearInterval(animate)
+						var distance;
+						if(!marker.infocus)
+							distance = marker._gusted || 0;
+							distance = distance === 2 ? 0 : distance += 1,
+							$(marker._icon).find('div')
+								// .css(vendorprefix.css+'text-stroke-color', [2,0].indexOf(distance)!==-1 ? 'transparent' : color )
+								// .css(vendorprefix.css+'text-stroke-width', Math.abs(2-distance) )
+								.css('text-shadow', ([2,0].indexOf(distance)!==-1 ? 'transparent ' + (gustsize - size)*distance + 'px 0px 0px' : color + ' ' + (gustsize - size)*distance + 'px 0px 0px' ) ),
+							marker._gusted = distance
+					// }, 3000)
+					}, transspeed*1000)
+				// },  Math.round(Math.random()*3000) + 1);
+				},  transspeed*1000);
 		})
 		hideloading();
 	}
@@ -176,7 +189,8 @@ function filterData(data){
 	/* create leaflet map */
 	var map = app.map = L.map('map', {
 		center: [37.83853, -122.39182],
-		zoom: 10
+		zoom: 10,
+		minZoom: 6
 	})
 	.on('popupopen',  function(){this.hasPopup = true})
 	.on('popupclose',  function(){this.hasPopup = false})
@@ -184,7 +198,13 @@ function filterData(data){
 	.on('zoomend',  loadStations);
 	
 	L.control.locate().addTo(map);
-	
+	var geocoderOptions = {position: 'topleft', showResultIcons: true}
+	var geocoder = L.Control.geocoder(geocoderOptions).addTo(map);
+	geocoder.markGeocode = function(result) {
+		var bbox = result.bbox;
+		map.fitBounds(bbox);
+	};
+
 	loadStations();
 
 	/* add default stamen tile layer */
@@ -194,5 +214,7 @@ function filterData(data){
 		maxNativeZoom: 18,
 		attribution: 'Map data © <a href="http://www.openstreetmap.org">OpenStreetMap contributors</a>'
 	}).addTo(map);
+
+	app.reloadInterval = setInterval( loadStations, 60000) // reload every minute
 
 }(window, document, L, app));

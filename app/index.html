@@ -6,12 +6,17 @@
 <head>
 	<meta charset="UTF-8">
 	<title>windmap</title>
-	<meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+	<meta name="description" content="windmap surfff">
+    <!-- <meta name="viewport" content="width=device-width"> -->
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
+	<link rel="stylesheet" href="bower_components/leaflet-control-geocoder/Control.Geocoder.css" />
     <!-- endbower -->
     <!-- endbuild -->
    
@@ -23,14 +28,16 @@
    	<!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="shortcut icon" href="favicon.ico">
 
 </head>
 <body>
 	
 		<header class="group">
-			<div class="appName">
-				windmap
+			<div class="appName">windmap</div>
+			<div id="legend">
+				<div class="green">GOOD <span class='rotate180 inline-block'>&#10148;</span></div>
+				<div class="red">bad &#10148;</div>
 			</div>
 		</header>
 	
@@ -43,7 +50,8 @@
      <script src="bower_components/topojson/topojson.js"></script>
      <script src="bower_components/leaflet/dist/leaflet.js"></script>
      <script src="bower_components/leaflet/dist/leaflet-src.js"></script>
-     <script src="bower_components/leaflet-ajax/dist/leaflet.ajax.js"></script>
+     <script src="bower_components/leaflet-ajax/dist/leaflet.ajax.js"></script> 
+     <script src="bower_components/leaflet-control-geocoder/Control.Geocoder.js"></script>
      <!-- endbower -->
     <!-- endbuild -->
 	

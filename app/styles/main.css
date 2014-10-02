@@ -109,10 +109,10 @@ header .appName {
 .direction.gray{
 	color: #ccc;
 }
-.direction.green{
+.green{
 	color: green;
 }
-.direction.red{
+.red{
 	color: red;
 }
 
@@ -121,8 +121,15 @@ header .appName {
 }
 
 .trans{
-	transition: all 1s ease;
+	transition: all 1s ease, text-shadow 1s linear;
 }
+
+.station{
+	opacity: 0.7;
+}
+/* .station.trans{
+	transition: all 3s linear;
+} */
 
 /* loading */
 .appName.loading:after {
@@ -133,6 +140,30 @@ header .appName {
 	text-align: right;
 	vertical-align: middle;
 	color: #666;
+}
+
+#legend {
+	position: fixed;
+	right: 0;
+	height: inherit;
+	top: 0;
+}
+
+#legend > div {
+	height: 50%;
+	line-height: 150%;
+}
+
+.inline-block{
+	display: inline-block;
+}
+.rotate90{
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+.rotate180{
+	-webkit-transform: rotate(180deg);
+	transform: rotate(180deg);
 }
 
 .leaflet-popup-content a{
@@ -147,7 +178,6 @@ header .appName {
 }
 
 .meteogram-container{
-	/* margin-bottom: -100px; */
 	display: block;
 } 
 .leaflet-popup-content .meteogram{
