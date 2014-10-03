@@ -177,21 +177,122 @@ header .appName {
 	background-color: #ddd;
 }
 
-.meteogram-container{
+.fullcontainer{
 	display: block;
-} 
-.leaflet-popup-content .meteogram{
-	max-width: 600px;
+	position: absolute;
+	width: 100%;
+	margin: 0 auto;
+	top: 0;
+	left: 0;
+	text-align: center;
+	height: 100%;
+	background-color: rgba(255,255,255,0.5);
+}
+
+.fullcontainer closer{
+	margin-top: 48px;
+}
+.fullcontainer.image img{
+	width: 90%;
+	box-shadow: #666 5px 7px 6px 5px;
+	border-radius: 15px;
+}
+
+.meteogram{
+/* 	max-width: 600px;
 	max-height: 500px;
 	overflow-y: scroll;
 	overflow-x: visible;
 	-webkit-transform: translateX(-50px) translateY(-50px) scale(0.8);
 	transform: translateX(-50px) translateY(-50px) scale(0.8);
-	padding: 10px 10px 0 10px;
+	padding: 10px 10px 0 10px; */
+	/* height: 900px; */
+	margin: 34px auto 0;
+	max-width: 900px;
+	overflow: auto;
+	-webkit-transform: scale(0.8);
+	transform: scale(0.8);
+	background-color: #fff;
+	padding: 20px 20px 0;
+	box-shadow: #666 5px 7px 6px 5px;
+	border-radius: 15px;
+	max-height: 90%;
+}
+
+.meteogram > * {
+/* 	-webkit-transform: scale(0.7) translateX(-126px);
+	transform: scale(0.7) translateX(-126px); */
+	font-size: 80%;
+}
+.meteogram table{
+	margin: 0 auto;
+	width: 100%;
 }
 
 /* leaflet ovverrides */
 .leaflet-tile{
-	-webkit-filter: sepia(0.7);
-	filter: sepia(0.7);
+	-moz-filter: sepia(80%);
+	-ms-filter: sepia(80%);
+	-o-filter: sepia(80%);
+	-webkit-filter: sepia(0.8);
+	filter: sepia(80%);
+/* 	filter: url(#sepiatone);
+	-webkit-filter: url(#sepiatone);
+	background-color: #5E2612;
+	filter: alpha(opacity = 50); */
+	/* zoom: 1; */
+}
+
+.leaflet-popup-content img{
+	max-width: 100%!important;
+}
+
+.closer{
+	background-color: rgba(173, 216, 230, 0.5);
+	cursor: pointer;
+}
+.closer:hover{
+	background-color: rgba(173, 216, 230, 1);
+}
+.fullcontainer .closer{
+	width: 200px;
+	margin: -10px auto 10px auto;
+	height: 23px;
+	font-size: 18px;
+}
+
+/* responsive media queries */
+/* // extra styles for mobile */
+@media all and (max-width: 600px) {
+	.meteogram{
+		max-width: 100%;
+		max-height: 100%;
+	}
+	.meteogram > * {
+		font-size: 60%;
+	}
+}
+
+/* extra styles for desktop */
+@media all and (min-width: 600px) {
+}
+
+
+/* iPhone 5 in portrait & landscape */
+@media only screen 
+and (min-device-width : 320px)
+and (max-device-width : 568px) {
+}
+
+/* iPhone 5 in portrait */
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 568px) 
+and (orientation : portrait) {
+}
+/* iPhone 5 in landscape */
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 568px) 
+and (orientation : landscape) { 
 }

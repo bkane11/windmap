@@ -39,12 +39,22 @@ function loadMeteogram(container, url){
                 "%22&format=xml'&callback=?",
         function(data){
           if(data.results[0]){
+			var closer = $('<div class="closer">close</div>').on('click', function(){
+				$(this).closest('.removeme').remove();
+			})
             var data = filterData(data.results[0]);
-			var html = $(data).find('.meteogram');
-            container.html(html)
-				.css('margin-bottom', '-100px');
+			var html = $(data).find('.meteogram')
 			html.find(' > :not(table, .heading, .model_container)').remove();
-			$('.leaflet-popup-content').width(500);
+			html.find('a[href]:not([href^=javascript])')
+				.attr('target', '_blank')
+				.each(function(){
+					$(this).attr('href', "http://www.iwindsurf.com/" + $(this).attr('href'));
+				})
+            container.html(html)
+				.addClass('removeme')
+				.appendTo(document.body)
+				.find('.meteogram')
+					.prepend(closer);
           } else {
             var errormsg = '<p>Error: could not load the page.</p>';
             container.html(errormsg);
@@ -90,10 +100,12 @@ function filterData(data){
 		removeStations();
 		var stations = app.stations = addStations();
 		var json =  JSON.parse(JSON.parse(res.responseText).error.split('//Total time:')[0]) ; // hacky way using the nodejistsu proxy
+		console.log(json[0]);
 		$.each(json, function(){
 			var direction = this.sensorReadings.length > 0 ? this.sensorReadings[0].direction : '',
 				avg = this.sensorReadings.length > 0 ? this.sensorReadings[0].average : '',
 				gust = this.sensorReadings.length > 0 ? this.sensorReadings[0].gust : '',
+				temp = this.sensorReadings.length > 0 ? this.sensorReadings[0].temperature : '',
 				fullname = this.fullName || '',
 				shortname = this.fullName || '';
 				var mouseover = direction + (avg ? ', avg: ' + avg : '') + (gust ? ', gust: ' + gust : '');
@@ -101,6 +113,9 @@ function filterData(data){
 				var size = (parseFloat(avg) || 1) * 2;
 				var gustsize = gust ? parseFloat(gust) * 2 : size;
 				var scaledsize = size/((gustsize-size)*2);
+				var vidimg;
+				if(window.vidimgs)
+					vidimg = vidimgs[this.id] || vidimgs[this.fullName];
 				// var html = '<div class="station trans" title="' + shortname + ' ' + (mouseover || 'no data') +'" style="font-size:'+ size +'px; ">&#10148;</div>';
 				var transspeed = 1/Math.abs(size-gustsize)*10;
 				var html = '<div class="station" title="' + shortname + ' ' + (mouseover || 'no data') +'" style="font-size:'+ size +'px; transition: all '+transspeed+'s linear;">&#10148;</div>';
@@ -115,14 +130,17 @@ function filterData(data){
 				className: ['direction',direction, color].join(' ')
 			});
 			var stationurl = 'http://www.iwindsurf.com/windandwhere.iws?regionID=1669&ISection=Forecast+Graphs&location_id=' + this.id;
-			var meteogram = $('<div class="meteogram-container"></div>')
+			var meteogram = $('<div class="fullcontainer meteogram-container"></div>')
 			var showmeteogram = $('<a class="showmeteogram">Show Meteogram</a>')
 				.on('click', function(){loadMeteogram(meteogram, stationurl)})
+			if(vidimg) console.log(vidimg);
 			var info = $('<div><h3>' + fullname + '</h3></div>')
 				.append(mouseover)
+				.append(temp ? '<br/>' + temp + '&deg;' : '')
+				.append(vidimg ? vidimg instanceof Function ?  vidimg() : vidimg : '')
 				.append('<a target="_blank" href="' + stationurl + '"> forecast </a>')
 				.append(showmeteogram)
-				.append(meteogram);
+				// .append(meteogram);
 			
 			var marker = L.marker([this.baseLat, this.baseLon], {icon: icon})
 				.bindPopup( info[0] )
@@ -216,5 +234,9 @@ function filterData(data){
 	}).addTo(map);
 
 	app.reloadInterval = setInterval( loadStations, 60000) // reload every minute
+	
+	// $('.closer').on('click', function(){
+		// $(this).closest('.removeme').remove();
+	// })
 
 }(window, document, L, app));
