@@ -128,6 +128,11 @@ header .appName {
 	opacity: 0.7;
 }
 
+/* .station.trans{
+	transition: all 3s linear;
+} */
+
+
 /* loading */
 .appName.loading:after {
 	content: 'loading...';
@@ -190,6 +195,7 @@ header .appName {
 .fullcontainer closer{
 	margin-top: 48px;
 }
+
 .fullcontainer.image > span > img{
 	width: 95%;
 	box-shadow: #666 5px 7px 6px 5px;
@@ -211,6 +217,32 @@ header .appName {
 }
 
 .meteogram > * {
+
+
+.meteogram{
+/* 	max-width: 600px;
+	max-height: 500px;
+	overflow-y: scroll;
+	overflow-x: visible;
+	-webkit-transform: translateX(-50px) translateY(-50px) scale(0.8);
+	transform: translateX(-50px) translateY(-50px) scale(0.8);
+	padding: 10px 10px 0 10px; */
+	/* height: 900px; */
+	margin: 34px auto 0;
+	max-width: 900px;
+	overflow: auto;
+	-webkit-transform: scale(0.8);
+	transform: scale(0.8);
+	background-color: #fff;
+	padding: 20px 20px 0;
+	box-shadow: #666 5px 7px 6px 5px;
+	border-radius: 15px;
+	max-height: 90%;
+}
+
+.meteogram > * {
+/* 	-webkit-transform: scale(0.7) translateX(-126px);
+	transform: scale(0.7) translateX(-126px); */
 	font-size: 80%;
 }
 .meteogram table{
@@ -225,6 +257,11 @@ header .appName {
 	-o-filter: sepia(80%);
 	-webkit-filter: sepia(0.8);
 	filter: sepia(80%);
+/* 	filter: url(#sepiatone);
+	-webkit-filter: url(#sepiatone);
+	background-color: #5E2612;
+	filter: alpha(opacity = 50); */
+	/* zoom: 1; */
 }
 
 .leaflet-popup-content img{
@@ -253,6 +290,9 @@ header .appName {
 /*geocoder*/
 .leaflet-control-geocoder-icon {
 	background-image: url(../images/geocoder.png);
+	margin: -10px auto 10px auto;
+	height: 23px;
+	font-size: 18px;
 }
 
 /* responsive media queries */
@@ -265,9 +305,34 @@ header .appName {
 	.meteogram > * {
 		font-size: 55%;
 		zoom: 0.9;
+		max-width: 100%;
+		max-height: 100%;
+	}
+	.meteogram > * {
+		font-size: 60%;
 	}
 }
 
 /* extra styles for desktop */
 @media all and (min-width: 600px) {
+}
+
+
+/* iPhone 5 in portrait & landscape */
+@media only screen 
+and (min-device-width : 320px)
+and (max-device-width : 568px) {
+}
+
+/* iPhone 5 in portrait */
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 568px) 
+and (orientation : portrait) {
+}
+/* iPhone 5 in landscape */
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 568px) 
+and (orientation : landscape) { 
 }

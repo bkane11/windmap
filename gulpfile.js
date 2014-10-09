@@ -1,12 +1,14 @@
 'use strict';
 // Generated on 2014-10-01 using generator-leaflet 0.0.16
 
+
 var gulp = require('gulp'),
     open = require('open'),
     debug = require('gulp-debug'),
     rename = require('gulp-rename'),
     path = require('path'),
     wiredep = require('wiredep').stream;
+
 
 // Load plugins
 var $ = require('gulp-load-plugins')();
@@ -26,6 +28,7 @@ gulp.task('scripts', function () {
         .pipe($.jshint.reporter('default'))
         .pipe($.size());
 });
+
 
 // clear cache to fix imagemin error
 gulp.task('clear_cache', function (done) {
@@ -78,6 +81,7 @@ gulp.task('images', ['clear_cache'],function () {
         })
 });
 
+
 // HTML
 gulp.task('html', ['styles', 'scripts'], function () {
     var jsFilter = $.filter('**/*.js');
@@ -94,6 +98,21 @@ gulp.task('html', ['styles', 'scripts'], function () {
         .pipe($.useref.restore())
         .pipe($.useref())
         .pipe(gulp.dest('dist'))
+        .pipe($.size());
+});
+
+
+// Images
+gulp.task('images', function () {
+    return gulp.src([
+    		'app/images/**/*',
+    		'app/lib/images/*'])
+        .pipe($.cache($.imagemin({
+            optimizationLevel: 3,
+            progressive: true,
+            interlaced: true
+        })))
+        .pipe(gulp.dest('dist/images'))
         .pipe($.size());
 });
 

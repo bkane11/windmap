@@ -43,7 +43,7 @@ function loadMeteogram(container, url){
 				$(this).closest('.removeme').remove();
 			})
             var data = filterData(data.results[0]);
-			var html = $(data).find('.meteogram').css('width', '100%');
+			var html = $(data).find('.meteogram')
 			html.find(' > :not(table, .heading, .model_container)').remove();
 			html.find('a[href]:not([href^=javascript])')
 				.attr('target', '_blank')
@@ -51,12 +51,14 @@ function loadMeteogram(container, url){
 					$(this).attr('href', "http://www.iwindsurf.com/" + $(this).attr('href'));
 				})
 
+
 			displayImage(html)
     //         container.html(html)
 				// .addClass('removeme')
 				// .appendTo(document.body)
 				// // .find('.meteogram')
 				// 	.prepend(closer);
+
           } else {
             var errormsg = '<p>Error: could not load the page.</p>';
             container.html(errormsg);
@@ -135,7 +137,9 @@ function filterData(data){
 			var meteogram = $('<div class="fullcontainer meteogram-container"></div>')
 			var showmeteogram = $('<a class="showmeteogram">Show Meteogram</a>')
 				.on('click', function(){loadMeteogram(meteogram, stationurl)})
+
 			// if(vidimg) console.log(vidimg);
+
 			var info = $('<div><h3>' + fullname + '</h3></div>')
 				.append(mouseover)
 				.append(temp ? '<br/>' + temp + '&deg;' : '')
