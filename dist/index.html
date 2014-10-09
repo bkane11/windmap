@@ -1,0 +1,46 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<title>windmap</title>
+	<meta name="description" content="windmap surfff">
+    <!-- <meta name="viewport" content="width=device-width"> -->
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	
+    <link rel="stylesheet" href="styles/vendor.css">
+   
+	<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.css' rel='stylesheet' />
+	<!--[if lt IE 9]>
+	  <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.21.0/L.Control.Locate.ie.css' rel='stylesheet' />
+	<![endif]-->
+	
+   	<link rel="stylesheet" href="styles/main.css">
+    <link rel="shortcut icon" href="favicon.ico">
+
+</head>
+<body>
+	
+		<header class="group">
+			<div class="appName">windmap</div>
+			<div id="legend">
+				<div class="green">GOOD <span class='rotate180 inline-block'>&#10148;</span></div>
+				<div class="red">bad &#10148;</div>
+			</div>
+		</header>
+	
+	<div class="map-application">
+		<div id="map" class="map"></div>
+	</div>
+	 <script src="scripts/vendor.js"></script>
+	
+	<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.js'></script>
+	
+	<script src="scripts/main.js"></script>
+</body>
+</html>

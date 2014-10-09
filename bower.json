@@ -1,0 +1,13 @@
+{
+  "name": "windmap",
+  "version": "0.0.0",
+  "dependencies": {
+    "topojson": "~1.5.2",
+    "jquery": "~2.1.0",
+    "leaflet": "~0.7.3",
+    "leaflet-ajax": "~1.1.0"
+  },
+  "devDependencies": {
+    "leaflet-control-geocoder": "~0.2.1"
+  }
+}
