@@ -1,11 +1,8 @@
 {
   "name": "windmap",
-<<<<<<< HEAD
   "repository" : "https://github.com/bkane11/windmap.git",
   "homepage" : "https://github.com/bkane11/windmap",
   "main" : "index.html",
-=======
->>>>>>> e73dfe66aea94a60fd85b9df7175be0ad31f8920
   "version": "0.0.0",
   "devDependencies": {
     "gulp": "^3.8.8",
@@ -14,18 +11,12 @@
     "gulp-clean": "^0.2.4",
     "gulp-connect": "^2.0.5",
     "gulp-csso": "^0.2.8",
-<<<<<<< HEAD
     "gulp-debug": "^1.0.1",
-=======
->>>>>>> e73dfe66aea94a60fd85b9df7175be0ad31f8920
     "gulp-filter": "^0.4.1",
     "gulp-imagemin": "^0.5.0",
     "gulp-jshint": "^1.5.5",
     "gulp-load-plugins": "^0.5.0",
-<<<<<<< HEAD
     "gulp-rename": "^1.2.0",
-=======
->>>>>>> e73dfe66aea94a60fd85b9df7175be0ad31f8920
     "gulp-size": "^0.3.0",
     "gulp-uglify": "^0.2.1",
     "gulp-useref": "^0.4.3",

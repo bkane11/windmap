@@ -56,7 +56,10 @@ function removeImage(cont){
 		after = img.data('after');
 	  	console.log(preparent, preCSS, after);
 		if(preparent)
-		  	img.insertBefore(after).css('margin', preCSS);
+		  	img.insertBefore(after)
+		  		.css('margin', preCSS)
+		  		// .on('click', displayImage.bind(img[0]))
+		  		.removeClass('fullsize');
 		cont.stop().fadeOut(1000).delay(1000).remove();
 	  }
 }
@@ -70,11 +73,16 @@ function displayImage(src){
 		.addClass('trans')
 		.attr('src', src);
 
+  if(img.hasClass('fullsize'))
+  	return false
+
   img.data('preCSS', img.css('margin'))
 	.data('preparent', img.parent())
 	.data('after', img.next())
 	.appendTo(helper)
-	.on('load', {'target': helper}, fitImg);
+	.addClass('fullsize')
+	.on('load', {'target': helper}, fitImg)
+	// .off('click', displayImage);
 
   var closer = $('<div>c  l  o  s  e</div>')
 	.addClass('closer')

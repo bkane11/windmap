@@ -127,11 +127,9 @@ header .appName {
 .station{
 	opacity: 0.7;
 }
-
 /* .station.trans{
 	transition: all 3s linear;
 } */
-
 
 /* loading */
 .appName.loading:after {
@@ -192,10 +190,9 @@ header .appName {
 	background-color: rgba(255,255,255,0.5);
 }
 
-.fullcontainer closer{
+.fullcontainer .closer{
 	margin-top: 48px;
 }
-
 .fullcontainer.image > span > img{
 	width: 95%;
 	box-shadow: #666 5px 7px 6px 5px;
@@ -204,7 +201,8 @@ header .appName {
 }
 
 .fullcontainer > span > *:first-child{
-	margin: 80px auto 0;
+	margin: 80px auto 0!important;
+	max-width: 95%;
 }
 
 .meteogram{
@@ -217,34 +215,22 @@ header .appName {
 }
 
 .meteogram > * {
-
+	width: 90%;
+}
 
 .meteogram{
-/* 	max-width: 600px;
-	max-height: 500px;
-	overflow-y: scroll;
-	overflow-x: visible;
-	-webkit-transform: translateX(-50px) translateY(-50px) scale(0.8);
-	transform: translateX(-50px) translateY(-50px) scale(0.8);
-	padding: 10px 10px 0 10px; */
-	/* height: 900px; */
-	margin: 34px auto 0;
-	max-width: 900px;
 	overflow: auto;
-	-webkit-transform: scale(0.8);
-	transform: scale(0.8);
+/*	-webkit-transform: scale(0.8);
+	transform: scale(0.8);*/
 	background-color: #fff;
-	padding: 20px 20px 0;
-	box-shadow: #666 5px 7px 6px 5px;
-	border-radius: 15px;
+	padding: 100px 20px 0;
 	max-height: 90%;
 }
 
 .meteogram > * {
-/* 	-webkit-transform: scale(0.7) translateX(-126px);
-	transform: scale(0.7) translateX(-126px); */
 	font-size: 80%;
 }
+
 .meteogram table{
 	margin: 0 auto;
 	width: 100%;
@@ -257,11 +243,6 @@ header .appName {
 	-o-filter: sepia(80%);
 	-webkit-filter: sepia(0.8);
 	filter: sepia(80%);
-/* 	filter: url(#sepiatone);
-	-webkit-filter: url(#sepiatone);
-	background-color: #5E2612;
-	filter: alpha(opacity = 50); */
-	/* zoom: 1; */
 }
 
 .leaflet-popup-content img{
@@ -280,18 +261,14 @@ header .appName {
 	margin: 55px auto -75px auto;
 	height: 23px;
 	font-size: 18px;
-/*	width: 200px;
-	margin: -10px auto 10px auto;
-	height: 23px;
-	font-size: 18px;*/
 }
 
 /*plugin ovverrides*/
 /*geocoder*/
 .leaflet-control-geocoder-icon {
-	background-image: url(../images/geocoder.png);
-	margin: -10px auto 10px auto;
-	height: 23px;
+background-image: url(../images/geocoder.png);
+	margin: 0px auto 1px auto;
+	height: 26px;
 	font-size: 18px;
 }
 
@@ -299,8 +276,7 @@ header .appName {
 /* // extra styles for mobile */
 @media all and (max-width: 600px) {
 	.meteogram{
-		/*max-width: 95%;
-		max-height: 80%;*/
+		
 	}
 	.meteogram > * {
 		font-size: 55%;
@@ -309,7 +285,7 @@ header .appName {
 		max-height: 100%;
 	}
 	.meteogram > * {
-		font-size: 60%;
+		font-size: 55%;
 	}
 }
 
