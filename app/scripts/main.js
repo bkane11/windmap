@@ -210,6 +210,12 @@ function filterData(data){
 		getWindJSON( getWindJSONurl() );
 	}
 	
+	function closePopup(e){
+		console.log(e);
+		if(map.hasPopup)
+			map.closePopup();
+		return map
+	}
 	/* create leaflet map */
 	var map = app.map = L.map('map', {
 		center: [37.83853, -122.39182],
@@ -219,13 +225,19 @@ function filterData(data){
 	.on('popupopen',  function(){this.hasPopup = true})
 	.on('popupclose',  function(){this.hasPopup = false})
 	.on('moveend',  loadStations)
+	.on('startfollowing', closePopup)
 	.on('zoomend',  loadStations);
 	
-	L.control.locate().addTo(map);
+	L.control.locate({
+		follow: true,
+		stopFollowingOnDrag: true
+
+	}).addTo(map);
 	var geocoderOptions = {position: 'topleft', showResultIcons: true}
 	var geocoder = L.Control.geocoder(geocoderOptions).addTo(map);
 	geocoder.markGeocode = function(result) {
 		var bbox = result.bbox;
+		closePopup();
 		map.fitBounds(bbox);
 	};
 

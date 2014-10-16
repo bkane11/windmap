@@ -19,6 +19,10 @@
 	}
 }());
 
+function toggleLeafletControls(){
+	return $('.leaflet-control-container').toggle();
+}
+
 function makeTimestamp(prefix){
 	return prefix += new Date().getTime()
 }
@@ -30,71 +34,49 @@ function changeLoadingHTML(html){
 		.html(html);
 }
 
-function fitImg(e){
-  var img = e.data.target.find('img');
-  var h = img.height(),
-	  w = img.width(),
-	  wh = $(window).height();
-  img
-	.css('margin-left', '-'+ (w/2 + $('.closer').width()/2) + 'px')
-	  .parent()
-		.css('margin', (wh - h)/2 + 'px auto')
-		.parent()
-		  .find('.closer')
-			.hide()
-			// .css('left', $(window).width()/2 + 'px')
-			.css('margin-top', ((wh - h)/2 - 10) + 'px')
-			.show()
-}
-function removeImage(cont){
-	$(window).off('resize', fitImg)
-		.off('orientationchange', fitImg)
-	  if(cont){
-	  	var img = cont.find('img');
-	  	preparent = img.data('preparent'),
-	  	preCSS = img.data('preCSS'),
-		after = img.data('after');
-	  	console.log(preparent, preCSS, after);
-		if(preparent)
-		  	img.insertBefore(after)
-		  		.css('margin', preCSS)
-		  		// .on('click', displayImage.bind(img[0]))
-		  		.removeClass('fullsize');
-		cont.stop().fadeOut(1000).delay(1000).remove();
-	  }
+function removeImage(e, cont){
+	if( $(e.target).hasClass('fullSizeImageContainer') || $(e.target).hasClass('helper') || $(e.target).hasClass('closer') ){
+		  if(cont){
+			var img = cont.find('img');
+			preparent = img.data('preparent'),
+			preCSS = img.data('preCSS'),
+			after = img.data('after');
+			if(preparent)
+				img.insertBefore(after)
+					.css('margin', preCSS)
+					.removeClass('fullsize');
+			cont.stop().fadeOut(1000).delay(1000).remove();
+		  }
+		  toggleLeafletControls();
+	}
 }
 
 function displayImage(src){
   var helper = $('<span></span>')
 	.addClass('helper')
   var img = typeof src !=='string' ?
-  	$(src) : // use the same img tag if it is what's being passed to the function
-  	$(document.createElement('img'))
+	$(src) : // use the same img tag if it is what's being passed to the function
+	$(document.createElement('img'))
 		.addClass('trans')
 		.attr('src', src);
 
   if(img.hasClass('fullsize'))
-  	return false
+	return false
 
   img.data('preCSS', img.css('margin'))
 	.data('preparent', img.parent())
 	.data('after', img.next())
 	.appendTo(helper)
 	.addClass('fullsize')
-	.on('load', {'target': helper}, fitImg)
-	// .off('click', displayImage);
 
   var closer = $('<div>c  l  o  s  e</div>')
 	.addClass('closer')
 	.addClass('trans')
-	.css('margin-top', '52px')
-	// .hide()
-	// .css({
-	  // 'z-index': '1000'
-	// })
-	.on('click', function(){
-	  removeImage(cont)
+	.on('click', function(e){
+	  removeImage(e,cont)
 	})
+	// .appendTo('header');
+
   var cont = $('<div></div>')
 	.addClass('fullSizeImageContainer')
 	.addClass('fullcontainer')
@@ -103,13 +85,15 @@ function displayImage(src){
 	.addClass('noBounce')
 	.append(closer)
 	.append(helper)
-	.appendTo('body')
-	.one('dblclick', function(){
-	  removeImage(cont);
+	.prependTo('body')
+	.one('dblclick', function(e){
+	  removeImage(e,cont);
 	})
-	.one('contextmenu', function(){
-	  removeImage(cont);
-	})
+	.one('contextmenu', function(e){
+	  removeImage(e,cont);
+	});
+
+	toggleLeafletControls();
 
   // $(window)
 	// .on('resize', {'target': helper}, fitImg)

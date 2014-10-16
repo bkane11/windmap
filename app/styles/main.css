@@ -25,7 +25,6 @@ html {
 	padding-top: 50px;
 }
 
-
 header {
 	position: absolute;
 	top: 0;
@@ -38,6 +37,14 @@ header {
 }
 header .appName {
 	float: left;
+}
+
+.noselect{
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-touch-callout: none;
 }
 
 /* station markers */
@@ -116,7 +123,7 @@ header .appName {
 	color: red;
 }
 
-.direction div {
+.direction div{
 	/* font-size: 30px; */
 }
 
@@ -179,6 +186,7 @@ header .appName {
 }
 
 .fullcontainer{
+	z-index: 999;
 	display: block;
 	position: absolute;
 	width: 100%;
@@ -191,18 +199,26 @@ header .appName {
 }
 
 .fullcontainer .closer{
-	margin-top: 48px;
+	width: 200px;
+	margin: 0 auto;
+	line-height: 25px;
+	text-align: center;
+	margin: 24px auto -75px auto;
+	height: 23px;
+	font-size: 18px;
+	box-shadow: #ccc 1px 1px 1px 0px;
 }
+
 .fullcontainer.image > span > img{
-	width: 95%;
-	box-shadow: #666 5px 7px 6px 5px;
-	background-color: #fff;
-	max-height: 90%;
+	width: 98%;
 }
 
 .fullcontainer > span > *:first-child{
 	margin: 80px auto 0!important;
-	max-width: 95%;
+	max-width: 98%;
+	box-shadow: #666 4px 6px 1px;
+	background-color: #fff;
+	max-height: calc(100% - 65px);
 }
 
 .meteogram{
@@ -211,7 +227,6 @@ header .appName {
 	overflow: auto;
 	background-color: #fff;
 	padding: 10px 20px 0;
-	box-shadow: #666 5px 7px 6px 5px;
 }
 
 .meteogram > * {
@@ -222,8 +237,8 @@ header .appName {
 	overflow: auto;
 /*	-webkit-transform: scale(0.8);
 	transform: scale(0.8);*/
+	/*padding: 100px 20px 0;*/
 	background-color: #fff;
-	padding: 100px 20px 0;
 	max-height: 90%;
 }
 
@@ -244,6 +259,18 @@ header .appName {
 	-webkit-filter: sepia(0.8);
 	filter: sepia(80%);
 }
+/*.leaflet-tile{
+	-moz-filter: sepia(80%);
+	-ms-filter: sepia(80%);
+	-o-filter: sepia(80%); 
+	-webkit-filter: sepia(0.8);
+	-webkit-filter: sepia(80%); 
+	filter: sepia(80%);
+	-webkit-filter: url(#sepiatone);
+	filter: url(#sepiatone); 
+	background-color: #5E2612;
+	filter: alpha(opacity = 50);
+}*/
 
 .leaflet-popup-content img{
 	max-width: 100%!important;
@@ -256,12 +283,6 @@ header .appName {
 .closer:hover{
 	background-color: rgba(173, 216, 230, 1);
 }
-.fullcontainer .closer{
-	width: 200px;
-	margin: 55px auto -75px auto;
-	height: 23px;
-	font-size: 18px;
-}
 
 /*plugin ovverrides*/
 /*geocoder*/
@@ -270,6 +291,25 @@ background-image: url(../images/geocoder.png);
 	margin: 0px auto 1px auto;
 	height: 26px;
 	font-size: 18px;
+}
+
+.leaflet-control-geocoder-alternatives{
+	max-height: 250px;
+	overflow-y: auto;
+	border-top: #ccc 1px solid;
+}
+
+.leaflet-control-geocoder-alternatives a {
+	display: block;
+	text-decoration: none;
+	color: #000;
+	padding: 6px 8px 16px 6px;
+	font-size: 12px;
+	white-space: normal;
+}
+form.leaflet-control-geocoder-form {
+	line-height: 26px;
+	vertical-align: text-top;
 }
 
 /* responsive media queries */
