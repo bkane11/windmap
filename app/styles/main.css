@@ -210,7 +210,11 @@ header .appName {
 }
 
 .fullcontainer.image > span > img{
-	width: 98%;
+	max-width: 98%;
+}
+
+.fullcontainer .width50pct{
+	width: 50%;
 }
 
 .fullcontainer > span > *:first-child{

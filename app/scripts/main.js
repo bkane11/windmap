@@ -100,7 +100,7 @@ function filterData(data){
 	}
 	
 	function processWindJSON(res){
-		if(res.statusText==='abort') return
+		if(res.statusText==='abort' || map.hasPopup) return hideloading()
 		removeStations();
 		var stations = app.stations = addStations();
 		var json =  JSON.parse(JSON.parse(res.responseText).error.split('//Total time:')[0]) ; // hacky way using the nodejistsu proxy
@@ -205,7 +205,10 @@ function filterData(data){
 	}
 	
 	function loadStations(){
-		if(map.hasPopup)return false
+		if(map.hasPopup)
+			if(map.getBounds().contains(map.hasPopup.getLatLng())) return false
+			else map.closePopup()
+
 		showloading();
 		getWindJSON( getWindJSONurl() );
 	}
@@ -222,12 +225,12 @@ function filterData(data){
 		zoom: 10,
 		minZoom: 6
 	})
-	.on('popupopen',  function(){this.hasPopup = true})
-	.on('popupclose',  function(){this.hasPopup = false})
+	.on('popupopen',  function(e){this.hasPopup = e.popup})
+	.on('popupclose',  function(e){this.hasPopup = false})
 	.on('moveend',  loadStations)
-	.on('startfollowing', closePopup)
-	.on('zoomend',  loadStations);
-	
+	.on('zoomend',  loadStations)
+	.on('startfollowing', closePopup);
+
 	L.control.locate({
 		follow: true,
 		stopFollowingOnDrag: true
@@ -252,9 +255,5 @@ function filterData(data){
 	}).addTo(map);
 
 	app.reloadInterval = setInterval( loadStations, 60000) // reload every minute
-	
-	// $('.closer').on('click', function(){
-		// $(this).closest('.removeme').remove();
-	// })
 
 }(window, document, L, app));
